@@ -1,12 +1,8 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/model/todo_model_class.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 
 class TodoAppUI extends StatefulWidget {
   const TodoAppUI({super.key});
@@ -16,9 +12,75 @@ class TodoAppUI extends StatefulWidget {
 }
 
 class _TodoAppState extends State {
+// /Text Editing Controllers
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController dataController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  Future<void> showBottomSht(bool doEdit,
+      [TodoModelClass? todoModelObj]) async {
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 15,
+            right: 15,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Create Tasks",
+                style: GoogleFonts.quicksand(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 22,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Title",
+                      style: GoogleFonts.quicksand(
+                        color: const Color.fromRGBO(89, 57, 241, 1),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(111, 81, 255, 1),
       body: Padding(
         padding: const EdgeInsets.only(
           top: 100,
@@ -34,8 +96,8 @@ class _TodoAppState extends State {
                 "Good Morning",
                 style: GoogleFonts.quicksand(
                   color: Colors.white,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 22,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 25,
                 ),
               ),
             ),
@@ -194,7 +256,8 @@ class _TodoAppState extends State {
                                             color: Color.fromRGBO(
                                                 217, 217, 217, 1),
                                           ),
-                                          child: Image.network("photo"),
+                                          child: Image.network(
+                                              "https://adniasolutions.com/wp-content/uploads/2018/05/To-Do-List-Excel-Template-01.png"),
                                         ),
                                         const SizedBox(
                                           width: 20,
@@ -206,7 +269,7 @@ class _TodoAppState extends State {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Lorem Ispum is simply dummy industry",
+                                                "Lorem Ispum is simply dummy industry ",
                                                 style: GoogleFonts.inter(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 15,
@@ -225,8 +288,28 @@ class _TodoAppState extends State {
                                                   fontSize: 12,
                                                 ),
                                               ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "10 June 2024",
+                                                style: GoogleFonts.inter(
+                                                    color: const Color.fromRGBO(
+                                                        0, 0, 0, 0.7),
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12),
+                                              ),
                                             ],
                                           ),
+                                        ),
+                                        Checkbox(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          activeColor: Colors.green,
+                                          value: true,
+                                          onChanged: (val) {},
                                         ),
                                       ],
                                     ),
@@ -243,6 +326,17 @@ class _TodoAppState extends State {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromRGBO(89, 57, 241, 1),
+        onPressed: () {
+          showBottomSht(false);
+        },
+        child: const Icon(
+          size: 50,
+          Icons.add,
+          color: Colors.white,
         ),
       ),
     );
