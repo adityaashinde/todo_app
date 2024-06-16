@@ -15,7 +15,7 @@ class _TodoAppState extends State {
 // /Text Editing Controllers
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController dataController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -44,7 +44,7 @@ class _TodoAppState extends State {
                 height: 20,
               ),
               Text(
-                "Create Tasks",
+                "CREATE TASKS",
                 style: GoogleFonts.quicksand(
                   fontWeight: FontWeight.w600,
                   fontSize: 22,
@@ -67,7 +67,143 @@ class _TodoAppState extends State {
                         fontSize: 15,
                       ),
                     ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    TextFormField(
+                      controller: titleController,
+                      decoration: InputDecoration(
+                        hintText: "Enter Title",
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Color.fromRGBO(89, 57, 241, 1),
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Description",
+                      style: GoogleFonts.quicksand(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: const Color.fromRGBO(89, 57, 241, 1),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    TextFormField(
+                      controller: descriptionController,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        hintText: "Enter Description",
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Color.fromRGBO(89, 57, 241, 1),
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Date",
+                      style: GoogleFonts.quicksand(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: const Color.fromRGBO(89, 57, 241, 1),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    TextFormField(
+                      controller: dateController,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        hintText: "Enter Date",
+                        suffixIcon: const Icon(Icons.date_range_rounded),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Color.fromRGBO(89, 57, 241, 1),
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2023),
+                          lastDate: DateTime(2028),
+                        );
+
+                        String formatedDate =
+                            DateFormat.yMMMd().format(pickedDate!);
+
+                        dateController.text = formatedDate;
+                      },
+                    ),
                   ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 50,
+                width: 300,
+                margin: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    backgroundColor: const Color.fromRGBO(89, 57, 241, 1),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Submit",
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -134,10 +270,10 @@ class _TodoAppState extends State {
                       height: 30,
                     ),
                     Text(
-                      "CREATE TASKS",
+                      "CREATE TO-DO LIST",
                       style: GoogleFonts.quicksand(
                         fontWeight: FontWeight.w500,
-                        fontSize: 15,
+                        fontSize: 18,
                       ),
                     ),
                     const SizedBox(
@@ -330,8 +466,8 @@ class _TodoAppState extends State {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromRGBO(89, 57, 241, 1),
-        onPressed: () {
-          showBottomSht(false);
+        onPressed: () async {
+          await showBottomSht(false);
         },
         child: const Icon(
           size: 50,
