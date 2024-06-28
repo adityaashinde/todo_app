@@ -69,7 +69,7 @@ Contributions are welcome! Please fork the repository and create a pull request 
 If you have any questions, feel free to reach out:
 
 - **Email:** [adityashinde.developer@gmail.com](mailto:adityashinde.developer@gmail.com)
-- **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/aditya-shinde-77286121b)
+- **LinkedIn:** [Aditya-Shinde](https://www.linkedin.com/in/aditya-shinde-77286121b)
   
 ---
 Thank you for checking out the Todo App! 📝✅
